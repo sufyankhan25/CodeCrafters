@@ -29,14 +29,14 @@ const Contact = () => {
     {
       icon: Mail,
       label: 'Email',
-      value: 'hello@codecrafters.agency',
-      href: 'mailto:hello@codecrafters.agency',
+      value: 'sultanosaman551@gmail.com',
+      href: 'mailto:sultanosaman551@gmail.com',
     },
     {
       icon: Phone,
       label: 'Phone',
-      value: '+92 306 9044757',
-      href: 'tel:+923069044757',
+      value: '+92 318 4898854',
+      href: 'tel:+923184898854',
     },
     {
       icon: MapPin,
