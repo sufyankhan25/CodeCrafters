@@ -129,11 +129,11 @@ const Footer = () => {
         <div className="border-t border-border/50 py-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Mail className="w-4 h-4 text-primary" />
-            sufyan265631@gmail.com
+          sultanosaman551@gmail.com
           </div>
           <div className="flex items-center gap-2">
             <Phone className="w-4 h-4 text-primary" />
-            +92 306 9044757
+            +92 318 4898854
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 text-primary" />
