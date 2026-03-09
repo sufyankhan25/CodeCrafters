@@ -37,7 +37,7 @@ const Footer = () => {
     },
     {
       icon: Linkedin,
-      href: 'https://www.linkedin.com/in/muhammad-sufyan-804921367',
+      href: 'https://www.linkedin.com/posts/omnex-digital_webdevelopment-appdevelopment-digitalmarketing-activity-7436732293135687680-dgIO?utm_source=share&utm_medium=member_android&rcm=ACoAADzjEmgBnkkTa7cX51QO4cpGWlXPv3t2SRI',
       label: 'LinkedIn',
       hoverColor: 'hover:bg-[#0A66C2] hover:text-white hover:shadow-[#0A66C2]/50'
     },

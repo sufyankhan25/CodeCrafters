@@ -6,24 +6,66 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { supabase } from '@/lib/supabase'; // Import Supabase client
 
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Form States
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    company: '',
+    projectType: '',
+    details: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData({ ...formData, projectType: value });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Supabase Insert Logic
+      const { error } = await supabase
+        .from('contacts')
+        .insert([
+          {
+            full_name: formData.fullName,
+            email: formData.email,
+            company: formData.company,
+            project_type: formData.projectType,
+            details: formData.details,
+          }
+        ]);
+
+      if (error) throw error;
+
       toast({
         title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
+        description: "Our team will get back to you within 24 hours.",
       });
+
+      // Reset form
+      setFormData({ fullName: '', email: '', company: '', projectType: '', details: '' });
+      
+    } catch (error: any) {
+      toast({
+        title: "Something went wrong.",
+        description: error.message || "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
       setIsSubmitting(false);
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+    }
   };
 
   const contactInfo = [
@@ -46,6 +88,9 @@ const Contact = () => {
       href: null,
     },
   ];
+
+  // Professional input styling class
+  const inputBaseClasses = "h-14 rounded-xl border-white/10 bg-background/60 backdrop-blur-md text-foreground placeholder:text-muted-foreground/50 focus:border-[#00E5FF]/50 focus:ring-2 focus:ring-[#00E5FF]/20 hover:bg-background/80 transition-all duration-300 text-base px-5 shadow-sm";
 
   return (
     <section id="contact" className="py-24 md:py-32 bg-background relative overflow-hidden transition-colors duration-500">
@@ -130,7 +175,7 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="bg-card/40 backdrop-blur-xl p-8 rounded-3xl border border-border/50 shadow-xl"
+              className="bg-card/40 backdrop-blur-xl p-8 rounded-3xl border border-white/5 shadow-xl"
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-12 rounded-xl bg-[#00E5FF]/10 flex items-center justify-center border border-[#00E5FF]/20">
@@ -159,63 +204,74 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="bg-card/40 backdrop-blur-xl p-8 sm:p-10 rounded-[2rem] border border-border/50 shadow-2xl relative overflow-hidden group">
+            <form onSubmit={handleSubmit} className="bg-card/30 backdrop-blur-2xl p-8 sm:p-10 rounded-[2rem] border border-white/10 shadow-2xl relative overflow-hidden group">
               
-              {/* Form internal subtle glow */}
               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gradient-to-bl from-[#B900FF]/10 to-transparent blur-3xl pointer-events-none -z-10 transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold text-foreground/80 ml-1">Full Name</label>
+                <div className="space-y-2.5">
+                  <label className="text-sm font-semibold text-foreground/90 ml-1">Full Name</label>
                   <Input 
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
                     placeholder="John Doe" 
                     required 
-                    className="h-14 rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:border-[#00E5FF]/50 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all text-base px-5"
+                    className={inputBaseClasses}
                   />
                 </div>
-                <div className="space-y-3">
-                  <label className="text-sm font-semibold text-foreground/80 ml-1">Email Address</label>
+                <div className="space-y-2.5">
+                  <label className="text-sm font-semibold text-foreground/90 ml-1">Email Address</label>
                   <Input 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     type="email" 
                     placeholder="john@company.com" 
                     required 
-                    className="h-14 rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:border-[#B900FF]/50 focus:ring-1 focus:ring-[#B900FF]/50 transition-all text-base px-5"
+                    className={inputBaseClasses}
                   />
                 </div>
               </div>
 
-              <div className="space-y-3 mb-6">
-                <label className="text-sm font-semibold text-foreground/80 ml-1">Company <span className="text-muted-foreground font-normal">(Optional)</span></label>
+              <div className="space-y-2.5 mb-6">
+                <label className="text-sm font-semibold text-foreground/90 ml-1">Company <span className="text-muted-foreground font-normal">(Optional)</span></label>
                 <Input 
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
                   placeholder="Your Company Name" 
-                  className="h-14 rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:border-[#00E5FF]/50 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all text-base px-5"
+                  className={inputBaseClasses}
                 />
               </div>
 
-              <div className="space-y-3 mb-6">
-                <label className="text-sm font-semibold text-foreground/80 ml-1">Project Type</label>
-                <Select>
-                  <SelectTrigger className="h-14 rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:border-[#B900FF]/50 focus:ring-1 focus:ring-[#B900FF]/50 transition-all text-base px-5">
+              <div className="space-y-2.5 mb-6">
+                <label className="text-sm font-semibold text-foreground/90 ml-1">Project Type</label>
+                <Select onValueChange={handleSelectChange} value={formData.projectType}>
+                  <SelectTrigger className={`${inputBaseClasses} border-white/10`}>
                     <SelectValue placeholder="What can we help you with?" />
                   </SelectTrigger>
-                  <SelectContent className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-xl">
-                    <SelectItem value="web" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">Website Development</SelectItem>
-                    <SelectItem value="branding" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">Brand Identity & Logo</SelectItem>
-                    <SelectItem value="video" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">Video Editing</SelectItem>
-                    <SelectItem value="ads" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">Digital Advertising</SelectItem>
-                    <SelectItem value="ai" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">AI Automation</SelectItem>
-                    <SelectItem value="seo" className="py-3 cursor-pointer hover:bg-white/5 focus:bg-white/5">SEO Optimization</SelectItem>
+                  <SelectContent className="bg-card/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl">
+                    <SelectItem value="web" className="py-3 cursor-pointer">Website Development</SelectItem>
+                    <SelectItem value="branding" className="py-3 cursor-pointer">Brand Identity & Logo</SelectItem>
+                    <SelectItem value="video" className="py-3 cursor-pointer">Video Editing</SelectItem>
+                    <SelectItem value="ads" className="py-3 cursor-pointer">Digital Advertising</SelectItem>
+                    <SelectItem value="ai" className="py-3 cursor-pointer">AI Automation</SelectItem>
+                    <SelectItem value="seo" className="py-3 cursor-pointer">SEO Optimization</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              <div className="space-y-3 mb-8">
-                <label className="text-sm font-semibold text-foreground/80 ml-1">Project Details</label>
+              <div className="space-y-2.5 mb-8">
+                <label className="text-sm font-semibold text-foreground/90 ml-1">Project Details</label>
                 <Textarea 
+                  name="details"
+                  value={formData.details}
+                  onChange={handleChange}
                   placeholder="Tell us about your goals, timeline, and budget..." 
                   rows={5}
                   required
-                  className="rounded-xl border-border/50 bg-background/50 backdrop-blur-sm focus:border-[#00E5FF]/50 focus:ring-1 focus:ring-[#00E5FF]/50 transition-all text-base p-5 resize-none"
+                  className={`${inputBaseClasses} h-auto py-4 resize-none`}
                 />
               </div>
 
