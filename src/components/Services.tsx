@@ -1,55 +1,55 @@
 import { motion } from 'framer-motion';
-import { Globe, Palette, Megaphone, Bot, Search, Wrench, ArrowRight, Sparkles } from 'lucide-react';
+import { Globe, Palette, Megaphone, Bot, Search, Wrench, ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const services = [
   {
     icon: Globe,
     title: 'Web Design & Dev',
-    description: 'Responsive, modern websites & web applications.',
-    price: '$400',
+    description: 'Responsive, modern websites & web applications built for performance.',
+    features: ['Custom UI/UX Design', 'Full-Stack Development', 'Speed Optimization'],
     gradient: "from-[#00E5FF] to-[#0055FF]",
-    popular: false,
+    featured: false,
   },
   {
     icon: Palette,
     title: 'Branding & Logo',
-    description: 'Strong, memorable brand identity and guidelines.',
-    price: '$200',
+    description: 'Strong, memorable brand identity and comprehensive guidelines.',
+    features: ['Logo Typography', 'Brand Guidelines', 'Visual Assets'],
     gradient: "from-[#0055FF] to-[#5500FF]",
-    popular: false,
+    featured: false,
   },
   {
     icon: Megaphone,
     title: 'Digital Ads',
-    description: 'High-converting Google, Meta, and TikTok campaigns.',
-    price: '$250',
+    description: 'High-converting campaigns across Google, Meta, and TikTok.',
+    features: ['Targeted Campaigns', 'Ad Creatives', 'ROI Tracking'],
     gradient: "from-[#5500FF] to-[#B900FF]",
-    popular: false,
+    featured: false,
   },
   {
     icon: Bot,
     title: 'AI Automation Setup',
-    description: 'Chatbots, custom AI agents, and workflow automation.',
-    price: '$350',
+    description: 'Smart chatbots, custom AI agents, and workflow automation.',
+    features: ['Custom AI Chatbots', 'Workflow Automation', 'CRM Integration'],
     gradient: "from-[#00E5FF] to-[#B900FF]",
-    popular: true, 
+    featured: true, 
   },
   {
     icon: Search,
     title: 'SEO Optimization',
-    description: 'Technical SEO to boost organic rankings & traffic.',
-    price: '$180',
+    description: 'Technical and on-page SEO to boost organic rankings & traffic.',
+    features: ['Keyword Strategy', 'Technical SEO Audit', 'Content Ranking'],
     gradient: "from-[#B900FF] to-[#0055FF]",
-    popular: false,
+    featured: false,
   },
   {
     icon: Wrench,
     title: 'Agency Maintenance',
-    description: 'Continuous updates, hosting, and technical support.',
-    price: '$100/mo',
+    description: 'Continuous updates, secure hosting, and priority technical support.',
+    features: ['24/7 Monitoring', 'Security Updates', 'Performance Tweaks'],
     gradient: "from-[#0055FF] to-[#00E5FF]",
-    popular: false,
+    featured: false,
   },
 ];
 
@@ -71,7 +71,7 @@ const Services = () => {
   return (
     <section id="services" className="py-24 md:py-32 bg-background relative overflow-hidden transition-colors duration-500">
       
-      {/* Background Ambient Glows - perfectly blended with the theme */}
+      {/* Background Ambient Glows - Kept exactly the same */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1px] bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1px] bg-gradient-to-r from-transparent via-[#00E5FF]/20 to-transparent" />
       <div className="absolute top-1/4 -left-64 w-[400px] h-[400px] bg-[#00E5FF]/5 rounded-full blur-[120px] pointer-events-none -z-10" />
@@ -94,14 +94,14 @@ const Services = () => {
             </span>
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-heading font-extrabold mb-6 tracking-tight text-foreground">
-            Transparent <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] to-[#B900FF]">Pricing</span>
+            Our Premium <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#00E5FF] to-[#B900FF]">Services</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-body max-w-2xl mx-auto leading-relaxed">
-            Premium digital services designed to scale your business. Transparent starting prices, no hidden fees.
+            High-impact digital services designed to scale your business, elevate your brand, and drive measurable results.
           </p>
         </motion.div>
 
-        {/* Pricing Grid */}
+        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <motion.div
@@ -116,13 +116,13 @@ const Services = () => {
               {/* Premium Background Glow on Hover */}
               <div className={`absolute -inset-0.5 bg-gradient-to-br ${service.gradient} rounded-[2rem] opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-500`} />
               
-              {/* Glassmorphic Card exactly matching Portfolio & Highlights */}
-              <div className={`relative h-full bg-card/40 backdrop-blur-xl p-8 rounded-[2rem] border transition-all duration-300 flex flex-col overflow-hidden ${service.popular ? 'border-[#00E5FF]/40 shadow-[0_0_30px_rgba(0,229,255,0.1)]' : 'border-border/50 group-hover:border-transparent'}`}>
+              {/* Glassmorphic Card */}
+              <div className={`relative h-full bg-card/40 backdrop-blur-xl p-8 rounded-[2rem] border transition-all duration-300 flex flex-col overflow-hidden ${service.featured ? 'border-[#00E5FF]/40 shadow-[0_0_30px_rgba(0,229,255,0.1)]' : 'border-border/50 group-hover:border-transparent'}`}>
                 
-                {/* Popular Badge */}
-                {service.popular && (
+                {/* Featured Badge */}
+                {service.featured && (
                   <div className="absolute top-0 right-0 bg-gradient-to-l from-[#00E5FF] to-[#0055FF] text-white text-[10px] font-bold uppercase tracking-wider py-1.5 px-6 rounded-bl-xl shadow-lg transform translate-x-1 -translate-y-1">
-                    Most Popular
+                    Featured
                   </div>
                 )}
 
@@ -136,36 +136,37 @@ const Services = () => {
                 </div>
 
                 {/* Title & Description */}
-                <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
+                <h3 className="text-2xl font-heading font-bold text-foreground mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-foreground group-hover:to-muted-foreground transition-all duration-300">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-8 flex-1">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
                   {service.description}
                 </p>
 
-                {/* Price Tag */}
-                <div className="mb-8 pt-6 border-t border-border/50">
-                  <p className="text-sm text-muted-foreground font-medium mb-1 uppercase tracking-wide">Starting From</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-heading font-extrabold text-foreground tracking-tight">{service.price}</span>
-                  </div>
+                {/* Features List (Added to replace Pricing) */}
+                <div className="mb-8 flex-1 space-y-3 pt-6 border-t border-border/50">
+                  {service.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center gap-3 text-sm text-foreground/80">
+                      <CheckCircle2 className="w-4 h-4 text-[#00E5FF] flex-shrink-0" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
 
                 {/* Interactive Button */}
                 <Button 
                   onClick={scrollToContact}
                   className={`w-full h-12 rounded-xl text-base font-semibold transition-all duration-300 relative overflow-hidden group/btn ${
-                    service.popular 
+                    service.featured 
                     ? 'bg-gradient-to-r from-[#0055FF] to-[#B900FF] text-white border-none hover:shadow-[0_0_20px_rgba(185,0,255,0.4)]' 
                     : 'bg-transparent text-foreground border border-border/60 hover:border-transparent'
                   }`}
                 >
-                  {/* Hover gradient fill for secondary buttons */}
-                  {!service.popular && (
+                  {!service.featured && (
                     <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-0 group-hover/btn:opacity-10 transition-opacity duration-300 -z-10`} />
                   )}
                   <span className="relative z-10 flex items-center justify-center gap-2">
-                    Get Started <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    Discuss Project <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </span>
                 </Button>
               </div>
@@ -173,7 +174,7 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Global CTA - Matched with theme */}
+        {/* Global CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -181,17 +182,17 @@ const Services = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-20"
         >
-          <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-6 p-8 rounded-[2rem] bg-card/30 border border-border/50 backdrop-blur-md w-full max-w-4xl mx-auto shadow-lg">
+          <div className="inline-flex flex-col sm:flex-row items-center justify-center gap-6 p-8 rounded-[2rem] bg-card/30 border border-border/50 backdrop-blur-md w-full max-w-4xl mx-auto shadow-lg hover:shadow-xl hover:border-white/10 transition-all duration-500">
             <div className="text-left flex-1">
               <h4 className="text-2xl font-bold text-foreground mb-2">Need a custom enterprise solution?</h4>
-              <p className="text-muted-foreground">Let's build a package specifically for your brand's requirements.</p>
+              <p className="text-muted-foreground">Let's build a package specifically tailored to your brand's unique requirements.</p>
             </div>
             <Button 
               onClick={scrollToContact}
               size="lg"
               className="h-14 px-8 rounded-full bg-foreground text-background hover:scale-105 transition-all font-bold shadow-xl whitespace-nowrap"
             >
-              Get a Custom Quote
+              Book Free Consultation
             </Button>
           </div>
         </motion.div>
